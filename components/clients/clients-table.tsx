@@ -2,39 +2,51 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { TagIcon, FilePenIcon, MoveVerticalIcon, ShareIcon, DeleteIcon } from "./icons"
 import { Button } from "@/components/ui/button"
-export default function ClientsTable() {
+import prisma from '@/lib/prisma';
+import { Prisma, Client } from "@prisma/client";
+export default async function ClientsTable() {
 
-    const dataTeste = [
-        { date: "Mar 12", description: "WeWork", category: "Office", amount: "$175.00" },
-        { date: "Mar 13", description: "WeWork", category: "Office", amount: "$175.00" },
-        { date: "Mar 14", description: "WeWork", category: "Office", amount: "$175.00" },
-        { date: "Mar 15", description: "WeWork", category: "Office", amount: "$175.00" },
-        { date: "Mar 16", description: "WeWork", category: "Office", amount: "$175.00" },
-    ]
+    // const dataTeste = [
+    //     { date: "Mar 12", description: "WeWork", category: "Office", amount: "$175.00" },
+    //     { date: "Mar 13", description: "WeWork", category: "Office", amount: "$175.00" },
+    //     { date: "Mar 14", description: "WeWork", category: "Office", amount: "$175.00" },
+    //     { date: "Mar 15", description: "WeWork", category: "Office", amount: "$175.00" },
+    //     { date: "Mar 16", description: "WeWork", category: "Office", amount: "$175.00" },
+    // ]
+
+    const clients: Client[] = await prisma.client.findMany({
+      // where: { published: true },
+      // include: {
+      //   author: {
+      //     select: { name: true },
+      //   },
+      // },
+    });
 
     return (
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Date</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead>ID</TableHead>
+              <TableHead>E-mail</TableHead>
+              <TableHead>Nome</TableHead>
+              <TableHead className="text-right">Telefone</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dataTeste.map((item, index) => (
+            {clients.map((client, index) => (
               <TableRow key={index}>
-                <TableCell>{ item.date }</TableCell>
-                <TableCell>{ item.description }</TableCell>
+                <TableCell>{ client.id }</TableCell>
+                <TableCell>{ client.email }</TableCell>
                 <TableCell>
-                  <span className="px-2 py-1 bg-red-200 text-red-800 rounded-md">
+                <TableCell>{ client.name }</TableCell>
+                  {/* <span className="px-2 py-1 bg-red-200 text-red-800 rounded-md">
                     <TagIcon className="w-4 h-4 inline-block mr-1" />
-                    { item.category }
-                  </span>
+                    { client.name }
+                  </span> */}
                 </TableCell>
-                <TableCell className="text-right">R${item.amount}</TableCell>
+                <TableCell className="text-right">{ client.phone }</TableCell>
                 <TableCell>
                   <Popover>
                     <PopoverTrigger>
