@@ -47,7 +47,7 @@ export default async function ClientsTable() {
                   </span> */}
                 </TableCell>
                 <TableCell className="text-right">{ client.phone }</TableCell>
-                <TableCell>
+                <TableCell className="hidden md:block">
                   <Popover>
                     <PopoverTrigger>
                       <Button
