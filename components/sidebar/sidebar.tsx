@@ -23,7 +23,7 @@ export default function Sidebar() {
     const pathname = usePathname();
 
     return(
-        <aside className="sticky top-0 h-screen w-56 bg-gray-100 text-gray-800 p-4">
+        <aside className="hidden md:block sticky top-0 h-screen w-56 bg-gray-100 text-gray-800 p-4">
             <div className="flex items-center mb-4 space-x-1">
                 <Image
                     src={ LogoMenu }
