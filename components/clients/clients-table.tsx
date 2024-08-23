@@ -2,26 +2,12 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { TagIcon, FilePenIcon, MoveVerticalIcon, ShareIcon, DeleteIcon } from "./icons"
 import { Button } from "@/components/ui/button"
-import prisma from '@/lib/prisma';
-import { Prisma, Client } from "@prisma/client";
+import { getClients }  from "@/actions/client"
+// import prisma from '@/lib/prisma';
+// import { Prisma, Client } from "@prisma/client";
 export default async function ClientsTable() {
 
-    // const dataTeste = [
-    //     { date: "Mar 12", description: "WeWork", category: "Office", amount: "$175.00" },
-    //     { date: "Mar 13", description: "WeWork", category: "Office", amount: "$175.00" },
-    //     { date: "Mar 14", description: "WeWork", category: "Office", amount: "$175.00" },
-    //     { date: "Mar 15", description: "WeWork", category: "Office", amount: "$175.00" },
-    //     { date: "Mar 16", description: "WeWork", category: "Office", amount: "$175.00" },
-    // ]
-
-    const clients: Client[] = await prisma.client.findMany({
-      // where: { published: true },
-      // include: {
-      //   author: {
-      //     select: { name: true },
-      //   },
-      // },
-    });
+    const clients = await getClients();
 
     return (
         <Table>
