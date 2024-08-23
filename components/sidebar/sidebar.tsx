@@ -29,7 +29,7 @@ export default function Sidebar() {
                     src={ LogoMenu }
                     width="30"
                     height="30"
-                    alt="Company Logo"
+                    alt="Pagfreela Logo"
                     style={{ aspectRatio: "30/30", objectFit: "cover" }}
                 />
                 <h1 className="text-lg font-medium">Pagfreela</h1>
