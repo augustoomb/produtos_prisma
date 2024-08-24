@@ -25,13 +25,11 @@ export default async function ClientsTable() {
               <TableRow key={index}>
                 <TableCell>{ client.id }</TableCell>
                 <TableCell>{ client.email }</TableCell>
-                <TableCell>
                 <TableCell>{ client.name }</TableCell>
                   {/* <span className="px-2 py-1 bg-red-200 text-red-800 rounded-md">
                     <TagIcon className="w-4 h-4 inline-block mr-1" />
                     { client.name }
                   </span> */}
-                </TableCell>
                 <TableCell className="text-right">{ client.phone }</TableCell>
                 <TableCell className="hidden md:block">
                   <Popover>
