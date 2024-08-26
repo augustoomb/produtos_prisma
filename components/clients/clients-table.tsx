@@ -33,7 +33,7 @@ export default async function ClientsTable() {
                 <TableCell className="text-right">{ client.phone }</TableCell>
                 <TableCell className="hidden md:block">
                   <Popover>
-                    <PopoverTrigger>
+                    <PopoverTrigger asChild>
                       <Button
                         type="button"
                         className="px-2 py-1 bg-transparent text-black hover:bg-gray-200 active:bg-gray-300 rounded"
