@@ -1,7 +1,9 @@
+'use server'
+
 import { Client } from "@prisma/client";
 import { clientSchema } from '@/types/zod';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 
 export async function getClients(): Promise<Client[]> {
     try {
@@ -57,6 +59,8 @@ export async function createClient(prevState: any, formData: FormData) {
         }
 
         await response.json();
+
+        revalidatePath('/dash/clients');
 
         return {
             status: "success",

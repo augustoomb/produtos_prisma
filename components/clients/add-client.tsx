@@ -17,6 +17,7 @@ import { toast } from "sonner"
 import { useFormState, useFormStatus } from "react-dom"
 import { createClient } from "@/actions/client"
 import { useState } from "react"
+import { revalidatePath } from 'next/cache';
 
 export default function AddClient() {
 
