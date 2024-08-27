@@ -8,7 +8,6 @@ import { getClients }  from "@/actions/client"
 export default async function ClientsTable() {
 
     const clients = await getClients();
-
     return (
         <Table>
           <TableHeader>
