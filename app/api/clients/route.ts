@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma';
-import { Client } from "@prisma/client";
+import { Client, Prisma } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 import { clientSchema } from '@/types/zod';
@@ -51,3 +51,26 @@ export async function POST(req: Request, res: NextApiResponse) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
+
+// DELETE CLIENTS
+export async function DELETE(req: Request, res: NextApiResponse) {
+    try {
+        const dataClient = await req.json();
+        const { id } = dataClient;
+        const client = await prisma.client.delete({where: { id: id },});
+ 
+        return NextResponse.json(client);
+    } catch (error) {
+
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === 'P2025') {
+                return NextResponse.json({ error: 'Dados não encontrados' }, { status: 400 });
+            }
+            console.log("Erro Prisma: "+error.code)
+          }
+
+
+
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+ }
