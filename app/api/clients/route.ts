@@ -1,20 +1,13 @@
 import prisma from '@/lib/prisma';
 import { Client, Prisma } from "@prisma/client";
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
 import { clientSchema } from '@/types/zod';
 
 // GET CLIENTS
 export async function GET(req: Request, res: NextApiResponse) {
    try {
-        const clients: Client[] = await prisma.client.findMany({
-            // where: { published: true },
-            // include: {
-            //   author: {
-            //     select: { name: true },
-            //   },
-            // },
-        });
+        const clients: Client[] = await prisma.client.findMany({});
 
         return NextResponse.json(clients);
    } catch (error) {
@@ -66,7 +59,6 @@ export async function DELETE(req: Request, res: NextApiResponse) {
             if (error.code === 'P2025') {
                 return NextResponse.json({ error: 'Dados não encontrados' }, { status: 400 });
             }
-            console.log("Erro Prisma: "+error.code)
           }
 
 

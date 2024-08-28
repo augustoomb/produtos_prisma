@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button"
-// import { DownloadIcon } from "@/components/clients/icons"
 
 
 export default function Dash() {

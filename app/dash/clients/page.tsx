@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button"
-import { PlusIcon } from "@/components/clients/icons"
 import ClientsTable from "@/components/clients/clients-table"
 import AddClient from "@/components/clients/add-client"
 

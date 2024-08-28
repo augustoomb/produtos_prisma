@@ -11,13 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { TagIcon, FilePenIcon, EllipsisIcon, DeleteIcon } from "./icons";
+import { FilePenIcon, EllipsisIcon, DeleteIcon } from "./icons";
 import { toast } from "sonner"
-import { useFormState, useFormStatus } from "react-dom"
-import { createClient, deleteCliente } from "@/actions/client"
+import { useFormState} from "react-dom"
+import { deleteCliente } from "@/actions/client"
 import { useState } from "react"
 import { Client } from "@prisma/client";
 

@@ -3,8 +3,6 @@
 import { Client } from "@prisma/client";
 import { clientSchema } from '@/types/zod';
 import { revalidatePath } from 'next/cache';
-// import { redirect } from 'next/navigation';
-import { toast } from "sonner"
 
 export async function getClients(): Promise<Client[]> {
     try {
