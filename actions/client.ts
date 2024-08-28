@@ -4,6 +4,7 @@ import { Client } from "@prisma/client";
 import { clientSchema } from '@/types/zod';
 import { revalidatePath } from 'next/cache';
 // import { redirect } from 'next/navigation';
+import { toast } from "sonner"
 
 export async function getClients(): Promise<Client[]> {
     try {
@@ -21,6 +22,44 @@ export async function getClients(): Promise<Client[]> {
         return []
     }
 }
+export async function deleteCliente( prevState: any, formData: FormData) {
+
+    const id = Number(formData.get('id'))
+
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+            method: 'DELETE',
+            body: JSON.stringify({
+                id: id
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            return {
+                status: "error",
+                errors: { erro: "Erro ao deletar. Verifique a disponibilidade do seu banco de dados." },
+            }
+        }
+
+        await response.json();
+
+        revalidatePath('/dash/clients');        
+
+        return {
+            status: "success",
+            errors: {},
+        }  
+
+    } catch (error) {
+        return {
+            status: "error",
+            errors: { erro: "Erro de sistema. Verifique com o suporte." },
+        }
+    }
+}
 
 export async function createClient(prevState: any, formData: FormData) {
     try {
@@ -31,7 +70,6 @@ export async function createClient(prevState: any, formData: FormData) {
         })
 
         if (!validatedClient.success) {
-            // console.log(validatedClient.error.flatten().fieldErrors)
             return {
                 status: "error",
                 errors: validatedClient.error.flatten().fieldErrors
