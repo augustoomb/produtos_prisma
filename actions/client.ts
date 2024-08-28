@@ -31,11 +31,14 @@ export async function createClient(prevState: any, formData: FormData) {
         })
 
         if (!validatedClient.success) {
+            // console.log(validatedClient.error.flatten().fieldErrors)
             return {
                 status: "error",
                 errors: validatedClient.error.flatten().fieldErrors
             }
         }
+
+        
 
         const { name, email, phone } = validatedClient.data     
 
@@ -54,7 +57,7 @@ export async function createClient(prevState: any, formData: FormData) {
         if (!response.ok) {
             return {
                 status: "error",
-                errors: "Erro desconhecido",
+                errors: { erro: "Erro ao criar. Verifique a disponibilidade do seu banco de dados." },
             }
         }
 
@@ -70,7 +73,7 @@ export async function createClient(prevState: any, formData: FormData) {
     } catch (error) {
         return {
             status: "error",
-            errors: "Erro desconhecido",
+            errors: { erro: "Erro de sistema. Verifique com o suporte." },
         }
     }
 }
