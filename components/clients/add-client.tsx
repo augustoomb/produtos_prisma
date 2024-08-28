@@ -17,7 +17,6 @@ import { toast } from "sonner"
 import { useFormState, useFormStatus } from "react-dom"
 import { createClient } from "@/actions/client"
 import { useState } from "react"
-import { revalidatePath } from 'next/cache';
 
 export default function AddClient() {
 
@@ -27,23 +26,15 @@ export default function AddClient() {
     };
 
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
-    // const [formState, formAction] = useFormState(createClient, formInitialState);
 
     const [formState, formAction] = useFormState(async (prevState: any, formData: FormData) => {
         const result = await createClient(prevState, formData);
-
-        // console.log(result);
 
         if (result.status === "success") {
             setDialogIsOpen(false);
 
             toast.success("Cliente salvo", {
                 description: "Cliente foi salvo com sucesso",
-                
-                // action: {
-                //   label: "Undo",
-                //   onClick: () => console.log("Undo"),
-                // },
             })
         }
 
@@ -64,11 +55,7 @@ export default function AddClient() {
                         Adicionar um novo cliente
                     </DialogDescription>
                 </DialogHeader>
-                <form action={formAction}
-                    // onSubmit={() => {
-                    //     setDialogIsOpen(false)
-                    // }}
-                >
+                <form action={formAction}>
                     <div className="grid gap-4 py-4">
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="name" className="text-right">
@@ -108,8 +95,12 @@ export default function AddClient() {
                         </div>
                     </div>
                     <DialogFooter className="flex flex-col">
-                        <Button type="submit">Salvar</Button>  
-                                             
+                        <DialogClose asChild>
+                            <Button type="button" variant="outline">
+                                Cancelar
+                            </Button>
+                        </DialogClose>
+                        <Button type="submit">Salvar</Button>                                             
                     </DialogFooter>        
                     <div className="text-sm text-red-500 text-center">
                             {formState.errors && (
