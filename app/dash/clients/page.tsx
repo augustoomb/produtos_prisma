@@ -1,4 +1,4 @@
-import { columns } from "@/components/clients/clients-table"
+import { columns } from "@/components/clients/columns-table"
 import { DataTable } from "@/components/clients/clients-table"
 import { getClients } from "@/actions/client";
 import { Client } from "@prisma/client";
