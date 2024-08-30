@@ -1,9 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { Client } from "@prisma/client";
-import { ArrowUpDown } from "lucide-react"
-import EditClient from "./edit-client";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -15,18 +12,8 @@ import {
     getSortedRowModel,
     useReactTable,
   } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import {
     Table,
     TableBody,
@@ -35,162 +22,21 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 
+import DropdownMenuActions from "./dropdown-menu-actions"
+
+import { Client } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
 }
 
-const teste = () => {
-  console.log("teste")
-}
-
-export const columns: ColumnDef<Client>[] = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: "id",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            ID
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-    },
-    {
-      accessorKey: "email",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Email
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-    },
-    {
-      accessorKey: "name",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Nome
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-    },
-    {
-      accessorKey: "phone",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Telefone
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        )
-      },
-    },
-    // {
-    //     accessorKey: "amount",
-    //     header: () => <div className="text-right">Amount</div>,
-    //     cell: ({ row }) => {
-    //       const amount = parseFloat(row.getValue("amount"))
-    //       const formatted = new Intl.NumberFormat("en-US", {
-    //         style: "currency",
-    //         currency: "USD",
-    //       }).format(amount)
-     
-    //       return <div className="text-right font-medium">{formatted}</div>
-    //     },
-    // },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-          const client = row.original
-     
-          return (
-            <div className="hidden md:block">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(String(client.id))}
-                  >
-                    Excluir
-                  </DropdownMenuItem>
-                  {/* <DropdownMenuSeparator /> */}
-                  <DropdownMenuItem>Editar</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          )
-        },
-    },
-]
-
-
-export function DataTable<TData, TValue>({
-    columns,
-    data,
-  }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = React.useState<SortingState>([])
 
-    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-      []
-    )
+    const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
     const [rowSelection, setRowSelection] = React.useState({})
 
@@ -245,7 +91,10 @@ export function DataTable<TData, TValue>({
               </TableHeader>
               <TableBody>
                   {table.getRowModel().rows?.length ? (
-                  table.getRowModel().rows.map((row) => (
+                  table.getRowModel().rows.map((row) => {
+                      const client = row.original as Client;
+
+                      return(
                       <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
@@ -255,8 +104,14 @@ export function DataTable<TData, TValue>({
                                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                               </TableCell>
                           ))}
-                      </TableRow>
-                  ))
+
+                          {/* actions */}
+                          <TableCell>
+                            <DropdownMenuActions client={ client }/>                            
+                          </TableCell>
+
+                      </TableRow>)
+})
                   ) : (
                   <TableRow>
                       <TableCell colSpan={columns.length} className="h-24 text-center">
