@@ -3,8 +3,7 @@
 import * as React from "react"
 import { Client } from "@prisma/client";
 import { ArrowUpDown } from "lucide-react"
-// import EditClient from "./edit-client";
-
+import EditClient from "./edit-client";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -16,13 +15,10 @@ import {
     getSortedRowModel,
     useReactTable,
   } from "@tanstack/react-table"
-
 import { MoreHorizontal } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +27,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
 import {
     Table,
     TableBody,
@@ -40,10 +35,26 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+}
+
+const teste = () => {
+  console.log("teste")
 }
 
 export const columns: ColumnDef<Client>[] = [
@@ -148,20 +159,19 @@ export const columns: ColumnDef<Client>[] = [
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Open menu</span>
+                    <span className="sr-only">Menu</span>
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuLabel>Ações</DropdownMenuLabel>
                   <DropdownMenuItem
                     onClick={() => navigator.clipboard.writeText(String(client.id))}
                   >
-                    Copy payment ID
+                    Excluir
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>View customer</DropdownMenuItem>
-                  <DropdownMenuItem>View payment details</DropdownMenuItem>
+                  {/* <DropdownMenuSeparator /> */}
+                  <DropdownMenuItem>Editar</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
