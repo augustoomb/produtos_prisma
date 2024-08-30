@@ -1,13 +1,17 @@
 "use client"
 
+import * as React from "react"
 import { Client } from "@prisma/client";
+import { ArrowUpDown } from "lucide-react"
 // import EditClient from "./edit-client";
 
 import {
     ColumnDef,
+    SortingState,
     flexRender,
     getCoreRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
     useReactTable,
   } from "@tanstack/react-table"
 
@@ -41,19 +45,59 @@ interface DataTableProps<TData, TValue> {
 export const columns: ColumnDef<Client>[] = [
     {
       accessorKey: "id",
-      header: "ID",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            ID
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
     },
     {
       accessorKey: "email",
-      header: "Email",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Email
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
     },
     {
       accessorKey: "name",
-      header: "Nome",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Nome
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
     },
     {
       accessorKey: "phone",
-      header: "Telefone",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Telefone
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        )
+      },
     },
     // {
     //     accessorKey: "amount",
@@ -106,11 +150,18 @@ export function DataTable<TData, TValue>({
     data,
   }: DataTableProps<TData, TValue>) {
 
+    const [sorting, setSorting] = React.useState<SortingState>([])
+
     const table = useReactTable({
       data,
       columns,
       getCoreRowModel: getCoreRowModel(),
       getPaginationRowModel: getPaginationRowModel(),
+      onSortingChange: setSorting,
+      getSortedRowModel: getSortedRowModel(),
+      state: {
+        sorting,
+      },
     })
    
     return (
