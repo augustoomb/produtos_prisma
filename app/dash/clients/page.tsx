@@ -1,26 +1,27 @@
-import ClientsTable from "@/components/clients/clients-table"
+import { columns } from "@/components/clients/clients-table"
+import { DataTable } from "@/components/clients/clients-table"
+import { getClients } from "@/actions/client";
+import { Client } from "@prisma/client";
 import AddClient from "@/components/clients/add-client"
 
-export default function Clients() {
-  return (
-      <main className="flex-grow p-2 md:p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-lg font-medium">Clientes</h1>
-          <div className="hidden md:block">
-            {/* <Button
-              type="button"
-              className="px-2 py-1 bg-gray-800 text-white rounded-lg flex items-center space-x-2 text-sm"
-            >
-              <PlusIcon className="w-4 h-4" />
-              <span>Cliente</span>
-            </Button> */}
-            <AddClient />
-          </div>
-        </div>
-        <ClientsTable />
-      </main>
-  )
+async function getData(): Promise<Client[]> {
+
+  const clients: Client[] = await getClients();
+  return clients
 }
 
+export default async function Clients() {
+  const data = await getData()
 
-
+  return (
+    <main className="flex-grow p-2 md:p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-lg font-medium">Clientes</h1>
+        <div className="hidden md:block">
+          <AddClient />
+        </div>
+      </div>
+      <DataTable columns={columns} data={data} />
+    </main>
+  )
+}
