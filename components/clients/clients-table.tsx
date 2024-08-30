@@ -21,6 +21,7 @@ import { MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Checkbox } from "@/components/ui/checkbox"
 
 import {
   DropdownMenu,
@@ -46,6 +47,28 @@ interface DataTableProps<TData, TValue> {
 }
 
 export const columns: ColumnDef<Client>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
     {
       accessorKey: "id",
       header: ({ column }) => {
@@ -154,9 +177,12 @@ export function DataTable<TData, TValue>({
   }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = React.useState<SortingState>([])
+
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
       []
     )
+
+    const [rowSelection, setRowSelection] = React.useState({})
 
     const table = useReactTable({
       data,
@@ -167,9 +193,11 @@ export function DataTable<TData, TValue>({
       getSortedRowModel: getSortedRowModel(),
       onColumnFiltersChange: setColumnFilters,
       getFilteredRowModel: getFilteredRowModel(),
+      onRowSelectionChange: setRowSelection,
       state: {
         sorting,
         columnFilters,
+        rowSelection,
       },
     })
    
@@ -229,23 +257,24 @@ export function DataTable<TData, TValue>({
               </TableBody>
             </Table>
           <div className="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Próxima
-          </Button>
-        </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Anterior
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Próxima
+            </Button>
+          </div>       
+          
       </div>
     </div>
     )
