@@ -20,6 +20,7 @@ export async function getClients(): Promise<Client[]> {
         return []
     }
 }
+
 export async function deleteCliente( prevState: any, formData: FormData) {
 
     const id = Number(formData.get('id'))
@@ -29,6 +30,44 @@ export async function deleteCliente( prevState: any, formData: FormData) {
             method: 'DELETE',
             body: JSON.stringify({
                 id: id
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            return {
+                status: "error",
+                errors: { erro: "Erro ao deletar. Verifique a disponibilidade do seu banco de dados." },
+            }
+        }
+
+        await response.json();
+
+        revalidatePath('/dash/clients');        
+
+        return {
+            status: "success",
+            errors: {},
+        }  
+
+    } catch (error) {
+        return {
+            status: "error",
+            errors: { erro: "Erro de sistema. Verifique com o suporte." },
+        }
+    }
+}
+export async function deleteClients( ids: number[] ) {
+
+    console.log(ids)
+
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+            method: 'DELETE',
+            body: JSON.stringify({
+                ids: ids
             }),
             headers: {
                 'Content-Type': 'application/json',

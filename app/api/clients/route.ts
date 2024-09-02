@@ -45,10 +45,17 @@ export async function POST(req: Request, res: NextApiResponse) {
     }
 }
 
-// DELETE CLIENTS
+// DELETE CLIENT
 export async function DELETE(req: Request, res: NextApiResponse) {
     try {
         const dataClient = await req.json();
+        
+        if(dataClient.ids) {
+            const { ids } = dataClient;
+            await prisma.client.deleteMany({ where: { id: { in: ids } } });
+            return NextResponse.json({ message: 'success' });
+        }
+
         const { id } = dataClient;
         const client = await prisma.client.delete({where: { id: id },});
  
@@ -60,8 +67,6 @@ export async function DELETE(req: Request, res: NextApiResponse) {
                 return NextResponse.json({ error: 'Dados não encontrados' }, { status: 400 });
             }
           }
-
-
 
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }

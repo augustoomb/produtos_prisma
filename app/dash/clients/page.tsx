@@ -15,7 +15,7 @@ export default async function Clients() {
 
   return (
     <main className="flex-grow p-2 md:p-6">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center">
         <h1 className="text-lg font-medium">Clientes</h1>
         <div className="hidden md:block">
           <AddClient />
