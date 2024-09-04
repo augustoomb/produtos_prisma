@@ -40,6 +40,7 @@ import { Client } from "@prisma/client";
 import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { deleteClients } from "@/actions/client"
+import SearchInput from "./search-input"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -100,21 +101,12 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
         })
       }
 
-    };
+    }; 
 
     return (
         <div>
           <div className="flex items-center justify-between">
-            <div className="flex items-center py-4">
-              <Input
-                placeholder="Busque por e-mail..."
-                value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-                onChange={(event) =>
-                  table.getColumn("email")?.setFilterValue(event.target.value)
-                }
-                className="max-w-sm"
-              />
-            </div>
+            <SearchInput table={ table }/>
             <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
                 <DialogTrigger hidden={selectedIds.length === 0}><Trash2 className="w-4 h-4" /></DialogTrigger>
                 <DialogContent>
