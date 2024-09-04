@@ -21,7 +21,7 @@ export async function getClients(): Promise<Client[]> {
     }
 }
 
-export async function deleteCliente( prevState: any, formData: FormData) {
+export async function deleteClient( prevState: any, formData: FormData) {
 
     const id = Number(formData.get('id'))
 
@@ -60,8 +60,6 @@ export async function deleteCliente( prevState: any, formData: FormData) {
     }
 }
 export async function deleteClients( ids: number[] ) {
-
-    console.log(ids)
 
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
@@ -112,8 +110,6 @@ export async function createClient(prevState: any, formData: FormData) {
                 errors: validatedClient.error.flatten().fieldErrors
             }
         }
-
-        
 
         const { name, email, phone } = validatedClient.data     
 

@@ -39,7 +39,6 @@ import {
 import { Client } from "@prisma/client";
 import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
-import { useFormState } from "react-dom"
 import { deleteClients } from "@/actions/client"
 
 interface DataTableProps<TData, TValue> {
@@ -87,31 +86,6 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
     const [dialogIsOpen, setDialogIsOpen] = React.useState(false);
 
 
-    // const formInitialState = {
-    //   status: "",
-    //   errors: {},
-    // };
-
-    // const [formState, formAction] = useFormState(async (prevState: any, formData: FormData) => {
-
-    //   // formData.append('ids', selectedIds.toString())
-
-    //   const result = await deleteClients(selectedIds);
-
-    //   if (result.status === "success") {
-    //       // setDialogIsOpen(false);
-
-    //       setSelectedIds([])
-
-    //       toast.success("Clientes excluídos", {
-    //           description: "Clientes foram excluídos com sucesso",
-    //       })
-    //   }
-
-    //   return result;
-    // }, formInitialState);
-
-
     const handleDelete = async () => {
       // Lógica para excluir os registros selecionados
 
@@ -123,13 +97,11 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
         setSelectedIds([])
         toast.success("Clientes excluídos", {
           description: "Clientes foram excluídos com sucesso",
-      })
+        })
       }
 
     };
-    
 
-       
     return (
         <div>
           <div className="flex items-center justify-between">
@@ -143,11 +115,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                 className="max-w-sm"
               />
             </div>
-            {/* <Button size="sm" variant="destructive" onClick={ handleDelete } className={selectedIds.length === 0 ? "hidden" : ""}>
-              <Trash2 className="w-4 h-4" />
-            </Button> */}
             <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
-              {/* <form action={formAction}> */}
                 <DialogTrigger hidden={selectedIds.length === 0}><Trash2 className="w-4 h-4" /></DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -165,7 +133,6 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                       <Button variant={"destructive"} onClick={handleDelete}>Confirmar</Button>
                   </DialogFooter>
                 </DialogContent>
-              {/* </form> */}
             </Dialog>
           </div>
           <div className="rounded-md border">
@@ -214,20 +181,17 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                   ) : (
                   <TableRow>
                       <TableCell colSpan={columns.length} className="h-24 text-center">
-                      No results.
+                      Sem clientes cadastrados.
                       </TableCell>
                   </TableRow>
                   )}
               </TableBody>
             </Table>
 
-
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} de{" "}
               {table.getFilteredRowModel().rows.length} linha(s) selecionadas.
             </div>
-
-
 
           <div className="flex items-center justify-end space-x-2 py-2">
             <Button
@@ -246,17 +210,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
             >
               Próxima
             </Button>
-          </div>       
-
-
-          {/* Exibir os IDs das linhas selecionadas */}
-          {/* <div className="py-4">
-              <strong>Selected Row IDs:</strong> {selectedIds.join(", ")}
-          </div> */}
-
-
-
-          
+          </div>              
       </div>
     </div>
     )

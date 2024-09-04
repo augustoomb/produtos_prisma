@@ -33,7 +33,7 @@ import { Client } from "@prisma/client";
 
 import { useFormState} from "react-dom"
 
-import { deleteCliente } from "@/actions/client"
+import { deleteClient } from "@/actions/client"
 
 import { toast } from "sonner"
 
@@ -77,7 +77,7 @@ export default function DropdownMenuActions({ client }: {client: Client}) {
 
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [formState, formAction] = useFormState(async (prevState: any, formData: FormData) => {
-        const result = await deleteCliente(prevState, formData);
+        const result = await deleteClient(prevState, formData);
 
         if (result.status === "success") {
             setDialogIsOpen(false);
@@ -98,8 +98,8 @@ export default function DropdownMenuActions({ client }: {client: Client}) {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">
-                    <span className="sr-only">Menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
+                        <span className="sr-only">Menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
