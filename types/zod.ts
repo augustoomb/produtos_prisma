@@ -1,6 +1,9 @@
 import { z, ZodIssue } from 'zod';
 
 export const clientSchema = z.object({
+    id: z.number().int({
+        message: 'O id deve ser um número inteiro',
+    }).optional(),
     name: z.string().min(5, {
         message: "Nome deve ter mais de 5 caracteres",
     }).max(50, {
