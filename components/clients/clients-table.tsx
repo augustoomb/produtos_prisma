@@ -13,7 +13,6 @@ import {
     useReactTable,
   } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -24,23 +23,12 @@ import {
 } from "@/components/ui/table"
 
 import DropdownMenuActions from "./dropdown-menu-actions"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog"
-
 
 import { Client } from "@prisma/client";
-import { Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { deleteClients } from "@/actions/client"
 import SearchInput from "./search-input"
+import MultipleDeleteButton from "./multiple-delete-button"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -107,25 +95,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
         <div>
           <div className="flex items-center justify-between">
             <SearchInput table={ table }/>
-            <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
-                <DialogTrigger hidden={selectedIds.length === 0}><Trash2 className="w-4 h-4" /></DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Apagar os itens selecionados?</DialogTitle>
-                    <DialogDescription>
-                      Essa ação não pode ser desfeita.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                      <DialogClose asChild>
-                      <Button type="button" variant="outline">
-                          Cancelar
-                      </Button>
-                      </DialogClose>
-                      <Button variant={"destructive"} onClick={handleDelete}>Confirmar</Button>
-                  </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <MultipleDeleteButton handleDelete={handleDelete} dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} selectedIds={selectedIds} />            
           </div>
           <div className="rounded-md border">
             <Table>

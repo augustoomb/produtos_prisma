@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input"
 import { Table } from "@tanstack/react-table";
 interface SearchInputProps<TData> {
     table: Table<TData>;
-  }
+}
 
 export default function SearchInput<TData>({ table }: SearchInputProps<TData>) {
     return(
