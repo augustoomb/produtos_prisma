@@ -44,6 +44,35 @@ export async function POST(req: Request, res: NextApiResponse) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
+export async function PUT(req: Request, res: NextApiResponse) {
+
+    try {
+        const dataClient = await req.json();
+
+        const validatedClient = clientSchema.safeParse(dataClient)
+
+        if (!validatedClient.success) {
+            return NextResponse.json({
+                errors: validatedClient.error.flatten().fieldErrors
+            }, { status: 400 });
+        }
+
+        const { id, name, email, phone } = dataClient
+
+        await prisma.client.update({
+            where: { id: id },
+            data: {
+                name,
+                email,
+                phone,
+            },
+        });
+
+        return NextResponse.json({ message: 'Cliente atualizado com sucesso' });
+    } catch (error) {
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+}
 
 // DELETE CLIENT
 export async function DELETE(req: Request, res: NextApiResponse) {
