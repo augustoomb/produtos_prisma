@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
 
 
     const handleDelete = async () => {
-      // Lógica para excluir os registros selecionados
+      // Lógica para excluir vários registros selecionados
 
       const result =  await deleteClients(selectedIds)
 
