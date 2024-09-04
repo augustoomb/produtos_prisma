@@ -7,7 +7,10 @@ import {
     DialogHeader,
     DialogTitle,
     // DialogTrigger,
-  } from "@/components/ui/dialog"
+} from "@/components/ui/dialog"
+
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 import {
     DropdownMenu,
@@ -33,31 +36,32 @@ import { Client } from "@prisma/client";
 
 import { useFormState} from "react-dom"
 
-import { deleteClient } from "@/actions/client"
+import { deleteClient, updateClient } from "@/actions/client"
 
 import { toast } from "sonner"
+ 
 
-export function Dialog2() {
-    return (
-        <>
-            <DialogHeader>
-                <DialogTitle>Dialog 2</DialogTitle>
-                <DialogDescription>
-                    2This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
-                </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-                <DialogClose asChild>
-                <Button type="button" variant="outline">
-                    Cancelar
-                </Button>
-                </DialogClose>
-                <Button variant={"destructive"} type="submit">Confirmar</Button>
-            </DialogFooter>
-        </>
-    )
-}
+// export function Dialog2() {
+//     return (
+//         <>
+//             <DialogHeader>
+//                 <DialogTitle>Dialog 2</DialogTitle>
+//                 <DialogDescription>
+//                     2This action cannot be undone. This will permanently delete your account
+//                     and remove your data from our servers.
+//                 </DialogDescription>
+//             </DialogHeader>
+//             <DialogFooter>
+//                 <DialogClose asChild>
+//                 <Button type="button" variant="outline">
+//                     Cancelar
+//                 </Button>
+//                 </DialogClose>
+//                 <Button variant={"destructive"} type="submit">Confirmar</Button>
+//             </DialogFooter>
+//         </>
+//     )
+// }
 
 export default function DropdownMenuActions({ client }: {client: Client}) {
 
@@ -77,18 +81,37 @@ export default function DropdownMenuActions({ client }: {client: Client}) {
 
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
     const [formState, formAction] = useFormState(async (prevState: any, formData: FormData) => {
-        const result = await deleteClient(prevState, formData);
 
-        if (result.status === "success") {
-            setDialogIsOpen(false);
+        // let result = {};
+        const submitButton = formData.get("submitButton");
 
-            toast.success("Cliente excluído", {
-                description: "Cliente foi excluído com sucesso",
-            })
+        if (submitButton === "deleteButton") {
+            const result = await deleteClient(prevState, formData);
+
+            if (result.status === "success") {
+                setDialogIsOpen(false);
+    
+                toast.success("Cliente excluído", {
+                    description: "Cliente foi excluído com sucesso",
+                })
+            }    
+    
+            return result;
+
+        } else {
+            const result = await updateClient(prevState, formData);
+
+            if (result.status === "success") {
+                setDialogIsOpen(false);
+    
+                toast.success("Cliente editado", {
+                    description: "Cliente foi editado com sucesso",
+                })
+            }    
+    
+            return result;
         }
-
-
-        return result;
+        
     }, formInitialState);
 
 
@@ -141,11 +164,91 @@ export default function DropdownMenuActions({ client }: {client: Client}) {
                                 Cancelar
                             </Button>
                             </DialogClose>
-                            <Button variant={"destructive"} type="submit">Confirmar</Button>
+                            <Button variant={"destructive"} type="submit" name="submitButton" value="deleteButton">Confirmar</Button>
                         </DialogFooter>
                     </form>
                 )
-                : <Dialog2 />
+                : (
+                    <form action={formAction}>
+                        <DialogHeader className="mt-2 mb-4">
+                            <DialogTitle className="">Editar cliente</DialogTitle>
+                            <DialogDescription>
+                                Edição de cliente cadastrado
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="id" className="text-right">
+                                    ID
+                                </Label>
+                                <Input
+                                    id="idClient"
+                                    name="idClient"
+                                    placeholder="XXX"
+                                    className="col-span-3 bg-slate-50"
+                                    defaultValue={client.id}
+                                    readOnly
+                                    // disabled
+                                />                            
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="name" className="text-right">
+                                    Nome
+                                </Label>
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    placeholder="Fulano de Tal"
+                                    className="col-span-3"
+                                    defaultValue={client.name}
+                                />                            
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="email" className="text-right">
+                                    E-mail
+                                </Label>
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="fulano@mail.com"
+                                    className="col-span-3"
+                                    defaultValue={client.email}
+                                />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="phone" className="text-right">
+                                    Telefone
+                                </Label>
+                                <Input
+                                    id="phone"
+                                    name="phone"
+                                    type="text"
+                                    placeholder="XX999998888"
+                                    className="col-span-3"
+                                    defaultValue={client.phone || ''}
+                                />
+                            </div>
+                        </div>
+                        <DialogFooter className="flex flex-col">
+                            <DialogClose asChild>
+                                <Button type="button" variant="outline">
+                                    Cancelar
+                                </Button>
+                            </DialogClose>
+                            <Button type="submit" name="submitButton" value="editButton">Salvar</Button>                                             
+                        </DialogFooter>        
+                        <div className="text-sm text-red-500 text-center">
+                                {formState.errors && (
+                                    <>
+                                        {Object.entries(formState.errors).map(([key, error]) => (
+                                            error && <p key={key}>{String(error)}</p>
+                                        ))}                                
+                                    </>
+                                )}
+                        </div>
+                    </form>
+                )
             }
             </DialogContent>
         </Dialog>

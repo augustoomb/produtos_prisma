@@ -148,3 +148,57 @@ export async function createClient(prevState: any, formData: FormData) {
         }
     }
 }
+export async function updateClient(prevState: any, formData: FormData) {
+    try {
+        const validatedClient = clientSchema.safeParse({
+            id: Number(formData.get('idClient')),
+            name: formData.get('name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+        })
+
+        if (!validatedClient.success) {
+            return {
+                status: "error",
+                errors: validatedClient.error.flatten().fieldErrors
+            }
+        }
+
+        const { id, name, email, phone } = validatedClient.data
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                id: id,
+                name: name,
+                email: email,
+                phone: phone,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            return {
+                status: "error",
+                errors: { erro: "Erro ao atualizar. Verifique a disponibilidade do seu banco de dados." },
+            }
+        }
+
+        await response.json();
+
+        revalidatePath('/dash/clients');
+
+        return {
+            status: "success",
+            errors: {},
+        }        
+        
+    } catch (error) {
+        return {
+            status: "error",
+            errors: { erro: "Erro de sistema. Verifique com o suporte." },
+        }
+    }
+}
