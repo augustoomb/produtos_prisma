@@ -185,7 +185,7 @@ export default function DropdownMenuActions({ client }: {client: Client}) {
                                     id="idClient"
                                     name="idClient"
                                     placeholder="XXX"
-                                    className="col-span-3 bg-slate-50"
+                                    className="col-span-3 bg-slate-50 pointer-events-none select-none"
                                     defaultValue={client.id}
                                     readOnly
                                     // disabled
