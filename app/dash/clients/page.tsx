@@ -3,6 +3,7 @@ import { DataTable } from "@/components/clients/clients-table"
 import { getClients } from "@/actions/client";
 import { Client } from "@prisma/client";
 import AddClient from "@/components/clients/add-client"
+import { Suspense } from 'react'
 
 async function getData(): Promise<Client[]> {
 
@@ -11,8 +12,6 @@ async function getData(): Promise<Client[]> {
 }
 
 export default async function Clients() {
-  const data = await getData()
-
   return (
     <main className="flex-grow p-2 md:p-6">
       <div className="flex justify-between items-center">
@@ -20,8 +19,18 @@ export default async function Clients() {
         <div className="hidden md:block">
           <AddClient />
         </div>
-      </div>
-      <DataTable columns={columns} data={data} />
+      </div>      
+      <Suspense fallback={<p>Carregando...</p>}> 
+        <ClientsTable />
+      </Suspense>
     </main>
+  )
+}
+
+async function ClientsTable() {
+  const data = await getData()
+
+  return (
+    <DataTable columns={columns} data={data} />
   )
 }
