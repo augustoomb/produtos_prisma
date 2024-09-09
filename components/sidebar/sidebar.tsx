@@ -13,7 +13,7 @@ const links: MenuItem[] = [
     { name: 'Home', href: '/dash', icon: HomeIcon },
     { name: 'Clientes', href: '/dash/clients', icon: UsersIcon },
     // { name: 'Compras', href: '/dash', icon: ShoppingCartIcon },
-    // { name: 'Produtos', href: '/dash', icon: ProductsIcon },
+    { name: 'Produtos', href: '/dash/products', icon: ProductsIcon },
     // { name: 'Configurações', href: '/dash', icon: SettingsIcon },
     // { name: 'Serviços', href: '/dash', icon: ServicesIcon },
     // { name: 'Vendas', href: '/dash', icon: WalletIcon },
