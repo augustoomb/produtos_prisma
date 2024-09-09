@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function getClients(): Promise<Client[]> {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export async function deleteClient( prevState: any, formData: FormData) {
     const id = Number(formData.get('id'))
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
             method: 'DELETE',
             body: JSON.stringify({
                 id: id
@@ -62,7 +62,7 @@ export async function deleteClient( prevState: any, formData: FormData) {
 export async function deleteClients( ids: number[] ) {
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
             method: 'DELETE',
             body: JSON.stringify({
                 ids: ids
@@ -113,7 +113,7 @@ export async function createClient(prevState: any, formData: FormData) {
 
         const { name, email, phone } = validatedClient.data     
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
             method: 'POST',
             body: JSON.stringify({
                 name: name,
@@ -166,7 +166,7 @@ export async function updateClient(prevState: any, formData: FormData) {
 
         const { id, name, email, phone } = validatedClient.data
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/clients`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
             method: 'PUT',
             body: JSON.stringify({
                 id: id,
