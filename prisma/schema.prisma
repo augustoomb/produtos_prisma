@@ -8,9 +8,17 @@ datasource db {
 }
 
 model Client {
-  id      Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  email   String   @unique
-  name    String
-  phone   String?
+  email     String   @unique
+  name      String
+  phone     String?
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String   @unique
+  price       Decimal   
+  description String
 }
