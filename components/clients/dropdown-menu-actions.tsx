@@ -38,30 +38,7 @@ import { useFormState} from "react-dom"
 
 import { deleteClient, updateClient } from "@/actions/client"
 
-import { toast } from "sonner"
- 
-
-// export function Dialog2() {
-//     return (
-//         <>
-//             <DialogHeader>
-//                 <DialogTitle>Dialog 2</DialogTitle>
-//                 <DialogDescription>
-//                     2This action cannot be undone. This will permanently delete your account
-//                     and remove your data from our servers.
-//                 </DialogDescription>
-//             </DialogHeader>
-//             <DialogFooter>
-//                 <DialogClose asChild>
-//                 <Button type="button" variant="outline">
-//                     Cancelar
-//                 </Button>
-//                 </DialogClose>
-//                 <Button variant={"destructive"} type="submit">Confirmar</Button>
-//             </DialogFooter>
-//         </>
-//     )
-// }
+import { toast } from "sonner" 
 
 export default function DropdownMenuActions({ client }: {client: Client}) {
 
