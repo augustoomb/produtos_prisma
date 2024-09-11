@@ -15,10 +15,24 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 import { useFormState } from "react-dom"
-import { createClient } from "@/actions/client"
 import { useState } from "react"
 
-export default function AddClient() {
+type FormField = {
+    id: string;
+    name: string;
+    label: string;
+    type: string;
+    placeholder: string;
+};
+
+interface AddEntityProps {
+    title: string;
+    description: string;
+    fields: FormField[];
+    createEntity: (formData: FormData) => Promise<any>;
+}
+
+export default function AddEntity({ title, description, fields, createEntity }: AddEntityProps) {
 
     const formInitialState = {
         status: "",
@@ -28,14 +42,14 @@ export default function AddClient() {
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
     const [formState, formAction] = useFormState(async (prevState: any, formData: FormData) => {
-        const result = await createClient(prevState, formData);
+        const result = await createEntity(formData);
 
         if (result.status === "success") {
             setDialogIsOpen(false);
 
-            toast.success("Cliente salvo", {
-                description: "Cliente foi salvo com sucesso",
-            })
+            toast.success(`${title} salvo`, {
+                description: `${title} foi salvo com sucesso`,
+            });
         }
 
 
@@ -50,49 +64,25 @@ export default function AddClient() {
             </DialogTrigger>            
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                    <DialogTitle>Novo Cliente</DialogTitle>
-                    <DialogDescription>
-                        Adicionar um novo cliente
-                    </DialogDescription>
+                    <DialogTitle>Novo {title}</DialogTitle>
+                    <DialogDescription>{description}</DialogDescription>
                 </DialogHeader>
                 <form action={formAction}>
                     <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="name" className="text-right">
-                                Nome
-                            </Label>
-                            <Input
-                                id="name"
-                                name="name"
-                                placeholder="Fulano de Tal"
+                        {fields.map((field) => (
+                            <div key={field.id} className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor={field.id} className="text-right">
+                                {field.label}
+                                </Label>
+                                <Input
+                                id={field.id}
+                                name={field.name}
+                                type={field.type}
+                                placeholder={field.placeholder}
                                 className="col-span-3"
-                            />                            
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="email" className="text-right">
-                                E-mail
-                            </Label>
-                            <Input
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder="fulano@mail.com"
-                                className="col-span-3"
-                            />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="phone" className="text-right">
-                                Telefone
-                            </Label>
-                            <Input
-                                id="phone"
-                                name="phone"
-                                type="text"
-                                placeholder="XX999998888"
-                                className="col-span-3"
-                                
-                            />
-                        </div>
+                                />
+                            </div>
+                        ))}
                     </div>
                     <DialogFooter className="flex flex-col">
                         <DialogClose asChild>

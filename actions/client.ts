@@ -96,7 +96,7 @@ export async function deleteClients( ids: number[] ) {
     }
 }
 
-export async function createClient(prevState: any, formData: FormData) {
+export async function createClient(formData: FormData) {
     try {
         const validatedClient = clientSchema.safeParse({
             name: formData.get('name'),

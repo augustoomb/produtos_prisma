@@ -96,7 +96,7 @@ export async function deleteProducts( ids: number[] ) {
     }
 }
 
-export async function createProduct(prevState: any, formData: FormData) {
+export async function createProduct(formData: FormData) {
 
     try {
         const validatedProduct = productSchema.safeParse({
