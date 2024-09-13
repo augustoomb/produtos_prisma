@@ -6,12 +6,6 @@ import { createClient } from "@/actions/client";
 import AddEntity from "@/components/reutilizaveis/add-entity";
 import { Suspense } from 'react'
 
-async function getData(): Promise<Client[]> {
-
-  const clients: Client[] = await getClients();
-  return clients
-}
-
 export default async function Clients() {
 
   const clientFields = [
@@ -42,7 +36,7 @@ export default async function Clients() {
 }
 
 async function ClientsTable() {
-  const data = await getData()
+  const data = await getClients()
 
   return (
     <DataTable columns={columns} data={data} />

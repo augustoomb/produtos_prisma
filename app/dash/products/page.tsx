@@ -6,13 +6,6 @@ import AddEntity from "@/components/reutilizaveis/add-entity";
 import { createProduct } from "@/actions/product";
 import { Suspense } from 'react'
 
-async function getData(): Promise<Product[]> {
-
-  const products: Product[] = await getProducts();
-  return products
-  
-}
-
 export default async function Products() {
   const productFields = [
     { id: "name", name: "name", label: "Nome", type: "text", placeholder: "Fone de ouvido" },
@@ -26,8 +19,8 @@ export default async function Products() {
         <h1 className="text-lg font-medium">Produtos</h1>
         <div className="hidden md:block">
         <AddEntity
-          title="Cliente"
-          description="Adicionar um novo cliente"
+          title="Produto"
+          description="Adicionar um novo produto"
           fields={productFields}
           createEntity={createProduct}
         />
@@ -41,7 +34,7 @@ export default async function Products() {
 }
 
 async function ProductsTable() {
-  const data = await getData()
+  const data = await getProducts()
 
   return (
     <DataTable columns={columns} data={data} />
