@@ -12,7 +12,7 @@ import {
     getSortedRowModel,
     useReactTable,
   } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
+
 import {
     Table,
     TableBody,
@@ -22,13 +22,13 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
+import { Button } from "@/components/ui/button"
 import DropdownMenuActions from "./dropdown-menu-actions"
-
 import { Product } from "@prisma/client";
 import { toast } from "sonner"
 import { deleteProducts } from "@/actions/product"
-import SearchInput from "./search-input"
-import MultipleDeleteButton from "./multiple-delete-button"
+import MultipleDeleteButton from "@/components/reutilizaveis/multiple-delete-button"
+import SearchInput from "@/components/reutilizaveis/search-input"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
     return (
         <div>
           <div className="flex items-center justify-between">
-            <SearchInput table={ table }/>
+          <SearchInput table={ table } searchAttribute="name"/>
             <MultipleDeleteButton handleDelete={handleDelete} dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} selectedIds={selectedIds} />            
           </div>
           <div className="rounded-md border">
