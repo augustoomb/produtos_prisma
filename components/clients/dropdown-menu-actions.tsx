@@ -1,16 +1,13 @@
 import {
-    // Dialog,
+    Dialog,
     DialogClose,
-    // DialogContent,
+    DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    // DialogTrigger,
+    DialogTrigger,
 } from "@/components/ui/dialog"
-
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 import {
     DropdownMenu,
@@ -21,24 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { MoreHorizontal } from "lucide-react"
-
-import {
-    Dialog,
-    DialogContent,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-
 import { Button } from "@/components/ui/button"
-
 import { useState } from "react"
-
 import { Client } from "@prisma/client";
-
 import { useFormState} from "react-dom"
-
 import { deleteClient, updateClient } from "@/actions/client"
-
-import { toast } from "sonner" 
+import { toast } from "sonner"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 export default function DropdownMenuActions({ client }: {client: Client}) {
 
