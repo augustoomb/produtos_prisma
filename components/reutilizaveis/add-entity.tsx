@@ -60,7 +60,7 @@ export default function AddEntity({ title, description, fields, createEntity }: 
     return (        
       <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
             <DialogTrigger asChild>
-                <Button className="px-4 py-1 bg-gray-800 text-white rounded-lg flex items-center space-x-2 text-sm">+ Cliente</Button>                
+                <Button className="px-4 py-1 bg-gray-800 text-white rounded-lg flex items-center space-x-2 text-sm">{ `+ ${title}` }</Button>                
             </DialogTrigger>            
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -72,14 +72,14 @@ export default function AddEntity({ title, description, fields, createEntity }: 
                         {fields.map((field) => (
                             <div key={field.id} className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor={field.id} className="text-right">
-                                {field.label}
+                                    {field.label}
                                 </Label>
                                 <Input
-                                id={field.id}
-                                name={field.name}
-                                type={field.type}
-                                placeholder={field.placeholder}
-                                className="col-span-3"
+                                    id={field.id}
+                                    name={field.name}
+                                    type={field.type}
+                                    placeholder={field.placeholder}
+                                    className="col-span-3"
                                 />
                             </div>
                         ))}
