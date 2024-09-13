@@ -2,17 +2,17 @@
 
 import * as React from "react"
 import {
-    ColumnDef,
-    ColumnFiltersState,
-    SortingState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable,
-  } from "@tanstack/react-table"
-import { Button } from "@/components/ui/button"
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+
 import {
     Table,
     TableBody,
@@ -23,12 +23,12 @@ import {
 } from "@/components/ui/table"
 
 import DropdownMenuActions from "./dropdown-menu-actions"
-
 import { Client } from "@prisma/client";
 import { toast } from "sonner"
 import { deleteClients } from "@/actions/client"
-import SearchInput from "./search-input"
-import MultipleDeleteButton from "./multiple-delete-button"
+import SearchInput from "@/components/reutilizaveis/search-input"
+import MultipleDeleteButton from "@/components/reutilizaveis/multiple-delete-button"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
     return (
         <div>
           <div className="flex items-center justify-between">
-            <SearchInput table={ table }/>
+            <SearchInput table={ table } searchAttribute="email"/>
             <MultipleDeleteButton handleDelete={handleDelete} dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} selectedIds={selectedIds} />            
           </div>
           <div className="rounded-md border">
