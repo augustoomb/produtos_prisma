@@ -9,7 +9,7 @@ import { Suspense } from 'react'
 export default async function Products() {
   const productFields = [
     { id: "name", name: "name", label: "Nome", type: "text", placeholder: "Fone de ouvido" },
-    { id: "price", name: "price", label: "Preço", type: "text", placeholder: "0,00" },
+    { id: "price", name: "price", label: "Preço", type: "number", placeholder: "0,00" },
     { id: "description", name: "description", label: "Descrição", type: "text", placeholder: "Produto feito com ..." },
   ];
 
