@@ -28,7 +28,7 @@ import { toast } from "sonner"
 import { deleteClients } from "@/actions/client"
 import SearchInput from "@/components/reutilizaveis/search-input"
 import MultipleDeleteButton from "@/components/reutilizaveis/multiple-delete-button"
-import { Button } from "@/components/ui/button"
+import Pagination from "../reutilizaveis/pagination"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -88,7 +88,6 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
           description: "Clientes foram excluídos com sucesso",
         })
       }
-
     }; 
 
     return (
@@ -143,7 +142,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                   ) : (
                   <TableRow>
                       <TableCell colSpan={columns.length} className="h-24 text-center">
-                      Sem clientes cadastrados.
+                        Sem clientes cadastrados.
                       </TableCell>
                   </TableRow>
                   )}
@@ -155,24 +154,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
               {table.getFilteredRowModel().rows.length} linha(s) selecionadas.
             </div>
 
-          <div className="flex items-center justify-end space-x-2 py-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Anterior
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Próxima
-            </Button>
-          </div>              
+            <Pagination table={ table }/>
       </div>
     </div>
     )
