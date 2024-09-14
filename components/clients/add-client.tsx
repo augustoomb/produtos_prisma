@@ -20,7 +20,7 @@ export default function AddClient() {
     const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
     const [formState, formAction] = useFormState(async (prevState: any, formData: FormData) => {
-        const result = await createClient(prevState, formData);
+        const result = await createClient(formData);
 
         if (result.status === "success") {
             setDialogIsOpen(false);
