@@ -2,8 +2,20 @@ import { DialogClose, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { Client } from "@prisma/client"
 
-export default function FormClient({ formAction, formState, client = null }: any) {
+interface FormState {
+    status: string,
+    errors: object,
+}
+
+interface FormClientProps {
+    formAction: any
+    formState: FormState
+    client?: Client | null
+}
+
+export default function FormClient({ formAction, formState, client = null }: FormClientProps) {
     return (
         <form action={formAction}>
             <div className="grid gap-4 py-4">
