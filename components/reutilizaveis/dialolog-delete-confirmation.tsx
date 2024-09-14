@@ -8,7 +8,12 @@ import {
 
 import { Button } from "@/components/ui/button"
 
-export default function DialogDeleteConfirmation({ formAction, id }:any) {
+interface DialogDeleteConfirmationProps {
+    formAction: any
+    id: number
+}
+
+export default function DialogDeleteConfirmation({ formAction, id }: DialogDeleteConfirmationProps) {
     return(
         <form action={formAction}>
             <DialogHeader className="mt-2 mb-4">
