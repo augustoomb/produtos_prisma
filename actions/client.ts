@@ -2,7 +2,7 @@
 
 import { Client } from "@prisma/client";
 import { clientSchema } from '@/types/zod';
-import { revalidatePath } from 'next/cache';
+import { fetcher } from "@/lib/utils";
 
 export async function getClients(): Promise<Client[]> {
     try {
@@ -21,36 +21,11 @@ export async function getClients(): Promise<Client[]> {
     }
 }
 
-export async function deleteClient( prevState: any, formData: FormData) {
-
-    const id = Number(formData.get('id'))
+export async function deleteClient( prevState: any, formData: FormData) {    
 
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
-            method: 'DELETE',
-            body: JSON.stringify({
-                id: id
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            return {
-                status: "error",
-                errors: { erro: "Erro ao deletar. Verifique a disponibilidade do seu banco de dados." },
-            }
-        }
-
-        await response.json();
-
-        revalidatePath('/dash/clients');        
-
-        return {
-            status: "success",
-            errors: {},
-        }  
+        const id = Number(formData.get('id'))
+        return await fetcher('DELETE', { id }, 'clients')
 
     } catch (error) {
         return {
@@ -60,34 +35,8 @@ export async function deleteClient( prevState: any, formData: FormData) {
     }
 }
 export async function deleteClients( ids: number[] ) {
-
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
-            method: 'DELETE',
-            body: JSON.stringify({
-                ids: ids
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            return {
-                status: "error",
-                errors: { erro: "Erro ao deletar. Verifique a disponibilidade do seu banco de dados." },
-            }
-        }
-
-        await response.json();
-
-        revalidatePath('/dash/clients');        
-
-        return {
-            status: "success",
-            errors: {},
-        }  
-
+        return await fetcher('DELETE', { ids }, 'clients')
     } catch (error) {
         return {
             status: "error",
@@ -111,35 +60,9 @@ export async function createClient(formData: FormData) {
             }
         }
 
-        const { name, email, phone } = validatedClient.data     
-
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
-            method: 'POST',
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                phone: phone,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            return {
-                status: "error",
-                errors: { erro: "Erro ao criar. Verifique a disponibilidade do seu banco de dados." },
-            }
-        }
-
-        await response.json();
-
-        revalidatePath('/dash/clients');
-
-        return {
-            status: "success",
-            errors: {},
-        }        
+        const { name, email, phone } = validatedClient.data 
+        
+        return await fetcher('POST', { name, email, phone }, 'clients')
         
     } catch (error) {
         return {
@@ -164,36 +87,9 @@ export async function updateClient(prevState: any, formData: FormData) {
             }
         }
 
-        const { id, name, email, phone } = validatedClient.data
+        const { id, name, email, phone } = validatedClient.data;
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                id: id,
-                name: name,
-                email: email,
-                phone: phone,
-            }),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            return {
-                status: "error",
-                errors: { erro: "Erro ao atualizar. Verifique a disponibilidade do seu banco de dados." },
-            }
-        }
-
-        await response.json();
-
-        revalidatePath('/dash/clients');
-
-        return {
-            status: "success",
-            errors: {},
-        }        
+        return await fetcher('PUT', { id, name, email, phone }, 'clients')
         
     } catch (error) {
         return {
