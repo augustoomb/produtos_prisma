@@ -18,7 +18,7 @@ export async function fetcher(method: string, body: any | null, model: string) {
   if (!response.ok) {
       return {
           status: "error",
-          errors: { erro: "Erro ao criar. Verifique a disponibilidade do seu banco de dados." },
+          errors: { erro: "Erro. Verifique a disponibilidade do seu banco de dados." },
       }
   }
 
