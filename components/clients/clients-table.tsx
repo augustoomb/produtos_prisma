@@ -28,7 +28,7 @@ import { toast } from "sonner"
 import { deleteClients } from "@/actions/client"
 import SearchInput from "@/components/general/search-input"
 import MultipleDeleteButton from "@/components/general/multiple-delete-button"
-import Pagination from "../general/pagination"
+import Pagination from "@/components/general/pagination"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
