@@ -13,12 +13,12 @@ import { Button } from "@/components/ui/button"
 
 import { Trash2 } from "lucide-react"
 
-interface MultipleDeleteButtonProps {
-    dialogIsOpen: boolean
-    setDialogIsOpen: (value: boolean) => void;
-    handleDelete: () => Promise<void> | void;
-    selectedIds: number[]
-}
+// interface MultipleDeleteButtonProps {
+//     dialogIsOpen: boolean
+//     setDialogIsOpen: (value: boolean) => void;
+//     handleDelete: () => Promise<void> | void;
+//     selectedIds: number[]
+// }
 
 export default function MultipleDeleteButton(props:any) {
     return(

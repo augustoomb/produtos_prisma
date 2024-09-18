@@ -23,7 +23,7 @@ import { useFormState} from "react-dom"
 import { deleteClient, updateClient } from "@/actions/client"
 import { toast } from "sonner"
 import FormClient from "./form-client"
-import DialogDeleteConfirmation from "../reutilizaveis/dialolog-delete-confirmation"
+import DialogDeleteConfirmation from "../general/dialolog-delete-confirmation"
 
 export default function DropdownMenuActions({ client }: {client: Client}) {
 

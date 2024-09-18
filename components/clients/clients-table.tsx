@@ -26,9 +26,9 @@ import DropdownMenuActions from "./dropdown-menu-actions"
 import { Client } from "@prisma/client";
 import { toast } from "sonner"
 import { deleteClients } from "@/actions/client"
-import SearchInput from "@/components/reutilizaveis/search-input"
-import MultipleDeleteButton from "@/components/reutilizaveis/multiple-delete-button"
-import Pagination from "../reutilizaveis/pagination"
+import SearchInput from "@/components/general/search-input"
+import MultipleDeleteButton from "@/components/general/multiple-delete-button"
+import Pagination from "../general/pagination"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
