@@ -1,21 +1,14 @@
 'use server'
 
+import { revalidatePath } from 'next/cache';
 import { Client } from "@prisma/client";
 import { clientSchema } from '@/types/zod';
-import { fetcher } from "@/lib/utils";
+import { reqApi, getApi } from "@/lib/utils";
 
-export async function getClients(): Promise<Client[]> {
-    try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/clients`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        const clients = await response.json();
-
-        return clients
+// export async function getClients(): Promise<Client[]> {
+export async function getClients() {
+    try {                
+        return await getApi('clients') 
     } catch (error) {
         return []
     }
@@ -25,7 +18,7 @@ export async function deleteClient( prevState: any, formData: FormData) {
 
     try {
         const id = Number(formData.get('id'))
-        return await fetcher('DELETE', { id }, 'clients')
+        return await reqApi('DELETE', { id }, 'clients')
 
     } catch (error) {
         return {
@@ -36,7 +29,7 @@ export async function deleteClient( prevState: any, formData: FormData) {
 }
 export async function deleteClients( ids: number[] ) {
     try {
-        return await fetcher('DELETE', { ids }, 'clients')
+        return await reqApi('DELETE', { ids }, 'clients')
     } catch (error) {
         return {
             status: "error",
@@ -62,7 +55,7 @@ export async function createClient(formData: FormData) {
 
         const { name, email, phone } = validatedClient.data 
         
-        return await fetcher('POST', { name, email, phone }, 'clients')
+        return await reqApi('POST', { name, email, phone }, 'clients')
         
     } catch (error) {
         return {
@@ -89,7 +82,7 @@ export async function updateClient(prevState: any, formData: FormData) {
 
         const { id, name, email, phone } = validatedClient.data;
 
-        return await fetcher('PUT', { id, name, email, phone }, 'clients')
+        return await reqApi('PUT', { id, name, email, phone }, 'clients')
         
     } catch (error) {
         return {

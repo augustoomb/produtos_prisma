@@ -6,10 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export async function fetcher(method: string, body: any | null, model: string) {
+// POST, PUT, DELETE
+export async function reqApi(method: string, body: any, model: string) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/${model}`, {
       method: method,
-      body: JSON.stringify(body),
+      body: JSON.stringify(body) ?? null,
       headers: {
           'Content-Type': 'application/json',
       },
@@ -30,4 +31,24 @@ export async function fetcher(method: string, body: any | null, model: string) {
       status: "success",
       errors: {},
   }       
+}
+
+// GET
+export async function getApi(model: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/${model}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+  
+    if (!response.ok) {
+        return {
+            status: "error",
+            errors: { erro: "Erro. Verifique a disponibilidade do seu banco de dados." },
+        }
+    }
+  
+    const data = await response.json();
+    return data
 }
