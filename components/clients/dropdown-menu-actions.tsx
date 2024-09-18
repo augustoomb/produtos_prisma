@@ -23,7 +23,7 @@ import { useFormState} from "react-dom"
 import { deleteClient, updateClient } from "@/actions/client"
 import { toast } from "sonner"
 import FormClient from "./form-client"
-import DialogDeleteConfirmation from "../general/dialolog-delete-confirmation"
+import DialogDeleteConfirmation from "@/components/general/dialolog-delete-confirmation"
 
 export default function DropdownMenuActions({ client }: {client: Client}) {
 
@@ -96,23 +96,23 @@ export default function DropdownMenuActions({ client }: {client: Client}) {
                 </DropdownMenuContent>
             </DropdownMenu>
             <DialogContent>
-            {dialog === Dialogs.dialog1
-                ? (
-                    <DialogDeleteConfirmation formAction={ formAction } id={client.id} />
-                )
-                : (                   
-                    <>
-                        <DialogHeader className="mt-2 mb-4">
-                            <DialogTitle className="">Editar cliente</DialogTitle>
-                            <DialogDescription>
-                                Edição de cliente cadastrado
-                            </DialogDescription>
-                        </DialogHeader>
+                {dialog === Dialogs.dialog1
+                    ? (
+                        <DialogDeleteConfirmation formAction={ formAction } id={client.id} />
+                    )
+                    : (                   
+                        <>
+                            <DialogHeader className="mt-2 mb-4">
+                                <DialogTitle className="">Editar cliente</DialogTitle>
+                                <DialogDescription>
+                                    Edição de cliente cadastrado
+                                </DialogDescription>
+                            </DialogHeader>
 
-                        <FormClient formAction={formAction} formState={formState} client={client}/>
-                    </>
-                )
-            }
+                            <FormClient formAction={formAction} formState={formState} client={client}/>
+                        </>
+                    )
+                }
             </DialogContent>
         </Dialog>
     )
