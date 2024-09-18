@@ -1,11 +1,8 @@
 'use server'
 
-import { revalidatePath } from 'next/cache';
-import { Client } from "@prisma/client";
 import { clientSchema } from '@/types/zod';
 import { reqApi, getApi } from "@/lib/utils";
 
-// export async function getClients(): Promise<Client[]> {
 export async function getClients() {
     try {                
         return await getApi('clients') 
