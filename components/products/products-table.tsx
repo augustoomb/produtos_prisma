@@ -22,13 +22,13 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-import { Button } from "@/components/ui/button"
 import DropdownMenuActions from "./dropdown-menu-actions"
 import { Product } from "@prisma/client";
 import { toast } from "sonner"
 import { deleteProducts } from "@/actions/product"
-import MultipleDeleteButton from "@/components/general/multiple-delete-button"
 import SearchInput from "@/components/general/search-input"
+import MultipleDeleteButton from "@/components/general/multiple-delete-button"
+import Pagination from "@/components/general/pagination"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
     return (
         <div>
           <div className="flex items-center justify-between">
-          <SearchInput table={ table } searchAttribute="name"/>
+            <SearchInput table={ table } searchAttribute="name"/>
             <MultipleDeleteButton handleDelete={handleDelete} dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} selectedIds={selectedIds} />            
           </div>
           <div className="rounded-md border">
@@ -143,7 +143,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
                   ) : (
                   <TableRow>
                       <TableCell colSpan={columns.length} className="h-24 text-center">
-                      Sem produtos cadastrados.
+                        Sem produtos cadastrados.
                       </TableCell>
                   </TableRow>
                   )}
@@ -155,24 +155,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
               {table.getFilteredRowModel().rows.length} linha(s) selecionadas.
             </div>
 
-          <div className="flex items-center justify-end space-x-2 py-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              Anterior
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            >
-              Próxima
-            </Button>
-          </div>              
+            <Pagination table={ table } />           
       </div>
     </div>
     )
