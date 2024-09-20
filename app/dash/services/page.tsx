@@ -1,34 +1,27 @@
-import { columns } from "@/components/clients/columns-table"
-import { DataTable } from "@/components/clients/clients-table"
-import { getClients } from "@/actions/client";
-import { Client } from "@prisma/client";
-import AddClient from "@/components/clients/add-client"
+import { columns } from "@/components/services/columns-table"
+import { DataTable } from "@/components/services/services-table"
+import { getServices } from "@/actions/service";
 import { Suspense } from 'react'
+import AddService from "@/components/services/add-service"; 
 
-async function getData(): Promise<Client[]> {
-
-  const clients: Client[] = await getClients();
-  return clients
-}
-
-export default async function Clients() {
+export default async function Services() {
   return (
     <main className="flex-grow p-2 md:p-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-lg font-medium">Clientes</h1>
+        <h1 className="text-lg font-medium">Serviços</h1>
         <div className="hidden md:block">
-          <AddClient />
+          <AddService />
         </div>
       </div>      
       <Suspense fallback={<p>Carregando...</p>}> 
-        <ClientsTable />
+        <ServicesTable />
       </Suspense>
     </main>
   )
 }
 
-async function ClientsTable() {
-  const data = await getData()
+async function ServicesTable() {
+  const data = await getServices()
 
   return (
     <DataTable columns={columns} data={data} />

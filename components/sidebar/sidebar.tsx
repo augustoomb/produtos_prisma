@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { HomeIcon, WalletIcon, UsersIcon, ShoppingCartIcon, ServicesIcon, 
     SettingsIcon, ProductsIcon } from './icons'
+import { Briefcase } from "lucide-react"
 import LogoMenu from '@/public/logo-F3F4F6.png'
 import { MenuItem } from '@/types/MenuItem'
 
@@ -15,7 +16,7 @@ const links: MenuItem[] = [
     // { name: 'Compras', href: '/dash', icon: ShoppingCartIcon },
     { name: 'Produtos', href: '/dash/products', icon: ProductsIcon },
     // { name: 'Configurações', href: '/dash', icon: SettingsIcon },
-    // { name: 'Serviços', href: '/dash', icon: ServicesIcon },
+    { name: 'Serviços', href: '/dash/services', icon: Briefcase },
     // { name: 'Vendas', href: '/dash', icon: WalletIcon },
 ]
 

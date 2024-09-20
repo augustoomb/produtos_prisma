@@ -22,3 +22,11 @@ model Product {
   price       Decimal   
   description String
 }
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  name        String   @unique
+  price       Decimal   
+  description String
+}
