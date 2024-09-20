@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, 
     return (
         <div>
           <div className="flex items-center justify-between">
-            <SearchInput table={ table } searchAttribute="name"/>
+            <SearchInput table={ table } searchAttribute="name" searchAttributeText="nome"/>
             <MultipleDeleteButton handleDelete={handleDelete} dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} selectedIds={selectedIds} />            
           </div>
           <div className="rounded-md border">
