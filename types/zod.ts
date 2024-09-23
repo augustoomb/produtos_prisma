@@ -50,3 +50,18 @@ export const serviceSchema = z.object({
         message: "Descrição deve ter mais de 5 caracteres",
     }).optional()
 });
+
+export const purchaseSchema = z.object({
+    id: z.number().int({
+        message: 'O id deve ser um número inteiro',
+    }).optional(),
+    total: z.number().nonnegative({
+        message: 'O preço deve ser um valor maior ou igual a zero',
+    }),
+    description: z.string().min(5, {
+        message: "Descrição deve ter mais de 5 caracteres",
+    }).optional(),
+    products: z.array(productSchema).nonempty({
+        message: 'Selecione pelo menos um produto',
+    })
+});
