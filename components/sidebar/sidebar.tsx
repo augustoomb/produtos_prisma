@@ -13,7 +13,7 @@ import { MenuItem } from '@/types/MenuItem'
 const links: MenuItem[] = [
     { name: 'Home', href: '/dash', icon: HomeIcon },
     { name: 'Clientes', href: '/dash/clients', icon: UsersIcon },
-    // { name: 'Compras', href: '/dash', icon: ShoppingCartIcon },
+    { name: 'Compras', href: '/dash/purchases', icon: ShoppingCartIcon },
     { name: 'Produtos', href: '/dash/products', icon: ProductsIcon },
     // { name: 'Configurações', href: '/dash', icon: SettingsIcon },
     { name: 'Serviços', href: '/dash/services', icon: Briefcase },
