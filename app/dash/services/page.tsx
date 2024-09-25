@@ -3,6 +3,7 @@ import { DataTable } from "@/components/services/services-table"
 import { getServices } from "@/actions/service";
 import { Suspense } from 'react'
 import AddService from "@/components/services/add-service"; 
+import { Service } from "@prisma/client";
 
 export default async function Services() {
   return (
@@ -21,7 +22,7 @@ export default async function Services() {
 }
 
 async function ServicesTable() {
-  const data = await getServices()
+  const data: Service[] = await getServices()
 
   return (
     <DataTable columns={columns} data={data} />
