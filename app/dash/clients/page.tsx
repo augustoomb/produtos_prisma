@@ -3,6 +3,7 @@ import { DataTable } from "@/components/clients/clients-table"
 import { getClients } from "@/actions/client";
 import { Suspense } from 'react'
 import AddClient from "@/components/clients/add-client";
+import { Client } from "@prisma/client";
 
 export default async function Clients() {
   return (
@@ -21,7 +22,7 @@ export default async function Clients() {
 }
 
 async function ClientsTable() {
-  const data = await getClients()
+  const data: Client[] = await getClients()
 
   return (
     <DataTable columns={columns} data={data} />
