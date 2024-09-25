@@ -60,6 +60,21 @@ export default function FormProduct({ formAction, formState, product = null }: F
                     />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="stock" className="text-right">
+                        Estoque
+                    </Label>
+                    <Input
+                        id="stock"
+                        name="stock"
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="5"
+                        className="col-span-3"
+                        {...(product && { defaultValue: product.stock || 0})}
+                    />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="description" className="text-right">
                         Descrição
                     </Label>

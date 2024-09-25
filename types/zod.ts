@@ -31,7 +31,12 @@ export const productSchema = z.object({
     }),
     description: z.string().min(5, {
         message: "Descrição deve ter mais de 5 caracteres",
-    }).optional()
+    }).optional(),
+    stock: z.number().int({
+        message: 'O estoque deve ser um número inteiro',
+    }).positive({
+        message: "O estoque deve ser um número positivo",
+    }).optional(),
 });
 
 export const serviceSchema = z.object({

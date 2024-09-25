@@ -29,12 +29,13 @@ export async function POST(req: Request, res: NextApiResponse) {
             }, { status: 400 });
         }
 
-        const { name, price, description } = dataProduct
+        const { name, price, stock, description } = dataProduct
 
         await prisma.product.create({
             data: {
                 name,
                 price: new Prisma.Decimal(price),
+                stock,
                 description,
             },
         });

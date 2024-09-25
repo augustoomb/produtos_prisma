@@ -1,6 +1,6 @@
 'use server'
 
-import { serviceSchema } from '@/types/zod';
+import { productSchema } from '@/types/zod';
 import { reqApi, getApi } from "@/lib/utils";
 
 export async function getProducts() {
@@ -38,9 +38,10 @@ export async function deleteProducts( ids: number[] ) {
 
 export async function createProduct(formData: FormData) {
     try {
-        const validatedProduct = serviceSchema.safeParse({
+        const validatedProduct = productSchema.safeParse({
             name: formData.get('name'),
             price: Number(formData.get('price')),
+            stock: Number(formData.get('stock')),
             description: formData.get('description'),
         })
 
@@ -51,9 +52,9 @@ export async function createProduct(formData: FormData) {
             }
         }
 
-        const { name, price, description } = validatedProduct.data     
+        const { name, price, stock, description } = validatedProduct.data     
 
-        return await reqApi('POST', { name, price, description }, 'products')
+        return await reqApi('POST', { name, price, stock, description }, 'products')
         
     } catch (error) {
         return {
@@ -64,7 +65,7 @@ export async function createProduct(formData: FormData) {
 }
 export async function updateProduct(prevState: any, formData: FormData) {
     try {
-        const validatedProduct = serviceSchema.safeParse({
+        const validatedProduct = productSchema.safeParse({
             id: Number(formData.get('idProduct')),
             name: formData.get('name'),
             price: Number(formData.get('price')),
