@@ -19,7 +19,7 @@ model Service {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   name        String   @unique
-  price       Decimal   
+  price       Decimal
   description String
 }
 
@@ -27,25 +27,7 @@ model Product {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   name        String   @unique
-  price       Decimal   
+  price       Decimal
+  stock       Int?
   description String
-  purchases   PurchaseProduct[]
-}
-
-model Purchase {
-  id          Int       @id @default(autoincrement())
-  createdAt   DateTime  @default(now())
-  total       Decimal
-  description String?
-  products    PurchaseProduct[]
-}
-
-model PurchaseProduct {
-  product     Product   @relation(fields: [productId], references: [id])
-  productId   Int
-  purchase    Purchase  @relation(fields: [purchaseId], references: [id])
-  purchaseId  Int
-  createdAt   DateTime  @default(now())
-
-  @@id([productId, purchaseId])
 }
