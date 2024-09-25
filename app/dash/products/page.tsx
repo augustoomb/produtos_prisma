@@ -2,6 +2,7 @@ import { columns } from "@/components/products/columns-table"
 import { DataTable } from "@/components/products/products-table"
 import { getProducts } from "@/actions/product";
 import { Suspense } from 'react'
+import { Product } from "@prisma/client";
 import AddProduct from "@/components/products/add-product";
 
 export default async function Products() {
@@ -21,7 +22,7 @@ export default async function Products() {
 }
 
 async function ProductsTable() {
-  const data = await getProducts()
+  const data: Product[] = await getProducts()
 
   return (
     <DataTable columns={columns} data={data} />
