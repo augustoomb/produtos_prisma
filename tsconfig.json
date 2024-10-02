@@ -32,7 +32,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "__tests__/components/clients/add-client.ss"
+    "__tests__/components/clients/add-client.ss",
+    "app/dash/(overview)/page.jsx"
   ],
   "exclude": [
     "node_modules"
