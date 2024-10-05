@@ -1,4 +1,8 @@
-https://github.com/augustoomb/produtos_prisma/blob/main/public/1.png?raw=true
+![1](https://github.com/user-attachments/assets/5bb98e2c-7385-46e0-91e3-ea19fd4036a0)
+![2](https://github.com/user-attachments/assets/88c25c3c-38b8-4bb7-baaa-aca1b5c3fe86)
+![3](https://github.com/user-attachments/assets/30f2983d-3b30-479c-8510-9091f909c2cb)
+![5](https://github.com/user-attachments/assets/cce8e7e9-f428-4b3b-bdd0-1fb617c259e2)
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
