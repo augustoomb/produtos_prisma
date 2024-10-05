@@ -1,4 +1,4 @@
-![alt text]([api-book-manager-swagger](https://github.com/augustoomb/produtos_prisma/blob/main/public/1.png?raw=true))
+[api-book-manager-swagger](https://github.com/augustoomb/produtos_prisma/blob/main/public/1.png?raw=true)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
